@@ -35,8 +35,15 @@ triggers:
     trigger: device
 
 variables:
-  zbminir2_device: !input "zbminir2_device"
-  zbminir2_switch: "{{ device_entities(zbminir2_device)[0] }}"
+  zbminir2_device: !input zbminir2_device
+  zbminir2_switch: >-
+    {{ device_entities(zbminir2_device)
+       | select('match', '^switch\.z2m_zbminir2_.*')
+       | reject('search', '_network_indicator$')
+       | reject('search', '_turbo_mode$')
+       | reject('search', '_delayed_power_on_state$')
+       | reject('search', '_detach_relay_mode$')
+       | first }}
 
 actions:
   - choose:
