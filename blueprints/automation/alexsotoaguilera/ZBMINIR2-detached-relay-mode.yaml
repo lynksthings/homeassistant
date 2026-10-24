@@ -35,7 +35,7 @@ triggers:
     trigger: device
 
 variables:
-  zbminir2_device: !input zbminir2_device
+  zbminir2_device: !input "zbminir2_device"
   zbminir2_switch: >-
     {{ device_entities(zbminir2_device)
        | select('match', '^switch\.z2m_zbminir2_.*')
