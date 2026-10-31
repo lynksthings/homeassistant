@@ -1,0 +1,63 @@
+blueprint:
+  name: ZBMINIR2 detached relay mode with Event Entities
+  description: Configure ZBMINIR2 to toggle lights without turning off the switch.
+  domain: automation
+  author: Alex Soto Aguilera
+  homeassistant:
+    min_version: 2024.8.0
+
+  input:
+    event_entity:
+      name: Action Event Entity
+      description: Select the event entity (e.g., `event.switch_office_action`).
+      selector:
+        entity:
+          filter:
+            domain: event
+          multiple: false
+
+    switch_entity:
+      name: ZBMINIR2 Switch/Relay
+      description: Select the physical relay (e.g., `switch.office`).
+      selector:
+        entity:
+          filter:
+            domain: switch
+          multiple: false
+
+    controlled_light:
+      name: Target Lights
+      description: Select the lights to toggle.
+      selector:
+        entity:
+          filter:
+            domain: light
+          multiple: true
+
+trigger:
+  - platform: state
+    entity_id: !input event_entity
+
+condition:
+  - condition: template
+    value_template: >-
+      {{ trigger.to_state is not none and
+         trigger.to_state.state not in ['unavailable', 'unknown'] and
+         trigger.from_state is not none and
+         trigger.from_state.state not in ['unavailable', 'unknown'] }}
+
+action:
+  - if:
+      - condition: state
+        entity_id: !input switch_entity
+        state: "off"
+    then:
+      - action: switch.turn_on
+        target:
+          entity_id: !input switch_entity
+
+  - action: light.toggle
+    target:
+      entity_id: !input controlled_light
+
+mode: single
