@@ -5,6 +5,7 @@ blueprint:
     Restored exact original logic for context filtering and presence checks.
   domain: automation
   author: Alex Soto Aguilera
+  source_url: https://raw.githubusercontent.com/lynksthings/homeassistant/main/blueprints/automatic-lights-with-manual-override.yaml
   homeassistant:
     min_version: 2024.8.0
 

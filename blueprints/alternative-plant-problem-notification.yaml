@@ -6,7 +6,7 @@ blueprint:
      * https://github.com/Olen/homeassistant-plant
   domain: automation
   author: Alex Soto Aguilera
-  source_url: https://github.com/alexsotoaguilera/homeassistant/tree/main/blueprints/automation/alexsotoaguilera/alternative-plant-problem-notification.yaml
+  source_url: https://raw.githubusercontent.com/lynksthings/homeassistant/main/blueprints/alternative-plant-problem-notification.yaml
   homeassistant:
     min_version: 2022.4.0
 
